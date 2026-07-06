@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 session_start();
 
 if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'admin') {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit;
 }
 
@@ -49,29 +49,30 @@ if (!$result) {
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="admin.css">
+    <link rel="stylesheet" type="text/css" href="../admin/admin.css">
     <title>Admin homet</title>
 </head>
 
 
 <body>
     <header class="header">
-        <a href=" ">Student Data</a>
+        <a href="student.home.php">Student Dashboard</a>
         <div class="logout">
-            <a href="logout.php">Logout</a>
+            <a href="../logout.php">Logout</a>
         </div>
     </header>
 
 
     <aside>
         <ul>
-            <li><a href="admission.php">Admission</a></li>
-            <li><a href="add_student.php">Add Student</a></li>
+            <li><a href="../admin/admission.php">Admission</a></li>
+            <li><a href="../admin/add_student.php">Add Student</a></li>
             <li><a href="view_student.php">View Student</a></li>
-            <li><a href="admin_add_teacher.php">Add Teacher</a></li>
-            <li><a href="admin_view_teacher.php">View Teacher</a></li>
-            <li><a href="admin_add_courses.php">Add Courses</a></li>
-            <li><a href="">View Courses</a></li>
+            <li><a href="../admin/admin_add_teacher.php">Add Teacher</a></li>
+            <li><a href="../admin/admin_view_teacher.php">View Teacher</a></li>
+            <li><a href="../admin/admin_add_courses.php">Add Courses</a></li>
+            <li><a href="../admin/admin_view_courses.php">View Courses</a></li>
+
         </ul>
     </aside>
     <div class="content">
@@ -102,8 +103,8 @@ if (!$result) {
                         <td class="table_td"><?php echo "{$info['phone']}"; ?></td>
                         <td class="table_td"><?php echo "{$info['password']}"; ?></td>
 
-                        <td class="table_td"><?php echo "<a onClick=\"javascript:return confirm('Are you sure to delete it')\" href='delete.php? student_id={$info['id']}'>Delete</a>"; ?> </td>
-                        <td class="table_td"><?php echo "<a href='update.php?student_id={$info['id']}'>Update</a>"; ?> </td>
+                        <td class="table_td"><?php echo "<a onClick=\"javascript:return confirm('Are you sure to delete it')\" href='../admin/delete.php?student_id={$info['id']}'>Delete</a>"; ?> </td>
+                        <td class="table_td"><?php echo "<a href='../admin/update.php?student_id={$info['id']}'>Update</a>"; ?> </td>
 
                     </tr>
                 <?php endwhile; ?>

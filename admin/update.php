@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 session_start();
 
 if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'admin') {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit;
 }
 
@@ -33,7 +33,7 @@ if (isset($_POST['update_student'])) {
     $result = mysqli_query($data, $sql);
     if ($result) {
         $_SESSION['message'] = 'Student updated successfully';
-        header('Location: view_student.php');
+        header('Location: ../students/view_student.php');
         exit;
     }
 }
@@ -48,7 +48,7 @@ if (!$result) {
 $info = $result->fetch_assoc();
 if (!$info) {
     $_SESSION['message'] = 'Student not found';
-    header('Location: view_student.php');
+    header('Location: ../students/view_student.php');
     exit;
 }
 
@@ -82,9 +82,9 @@ if (!$info) {
 
 <body>
     <header class="header">
-        <a href=" ">Admin Dashboard</a>
+        <a href="adminhome.php">Admin Dashboard</a>
         <div class="logout">
-            <a href="logout.php">Logout</a>
+            <a href="../logout.php">Logout</a>
         </div>
     </header>
 
@@ -103,29 +103,29 @@ if (!$info) {
 
         <ul>
             <li>
-                <a href="view_student.php">View Student</a>
+                <a href="../students/view_student.php">View Student</a>
             </li>
         </ul>
         <ul>
             <li>
-                <a href="">Add Teacher</a>
+                <a href="admin_add_teacher.php">Add Teacher</a>
             </li>
         </ul>
         <ul>
             <li>
-                <a href="">View Teacher</a>
-            </li>
-        </ul>
-
-        <ul>
-            <li>
-                <a href="">Add Courses</a>
+                <a href="admin_view_teacher.php">View Teacher</a>
             </li>
         </ul>
 
         <ul>
             <li>
-                <a href="">View Courses</a>
+                <a href="admin_add_courses.php">Add Courses</a>
+            </li>
+        </ul>
+
+        <ul>
+            <li>
+                <a href="admin_view_courses.php">View Courses</a>
             </li>
         </ul>
     </aside>

@@ -8,7 +8,7 @@ session_start();
 echo "<!-- Session Debug: " . print_r($_SESSION, true) . " -->";
 
 if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
@@ -26,7 +26,7 @@ if (isset($_GET['teacher_id']) && $_GET['teacher_id'] !== '') {
     $sql2 = "DELETE FROM teacher WHERE id='$t_id'";
     $result2 = mysqli_query($data, $sql2);
     if ($result2) {
-        header('Location: admin_view_teacher.php');
+        header('Location: ' . $_SERVER['PHP_SELF']);
         exit;
     }
 }
@@ -84,9 +84,9 @@ if (isset($_GET['teacher_id']) && $_GET['teacher_id'] !== '') {
 
 <body>
     <header class="header">
-        <a href=" ">Admin Deshboard</a>
+        <a href="adminhome.php">Admin Dashboard</a>
         <div class="logout">
-            <a href="logout.php">Logout</a>
+            <a href="../logout.php">Logout</a>
         </div>
     </header>
 
@@ -95,11 +95,11 @@ if (isset($_GET['teacher_id']) && $_GET['teacher_id'] !== '') {
         <ul>
             <li><a href="admission.php">Admission</a></li>
             <li><a href="add_student.php">Add Student</a></li>
-            <li><a href="view_student.php">View Student</a></li>
+            <li><a href="../students/view_student.php">View Student</a></li>
             <li><a href="admin_add_teacher.php">Add Teacher</a></li>
             <li><a href="admin_view_teacher.php">View Teacher</a></li>
             <li><a href="admin_add_courses.php">Add Courses</a></li>
-            <li><a href="">View Courses</a></li>
+            <li><a href="admin_view_courses.php">View Courses</a></li>
         </ul>
     </aside>
     <div class="content">
@@ -118,15 +118,13 @@ if (isset($_GET['teacher_id']) && $_GET['teacher_id'] !== '') {
 
                 <?php
                 while ($info = $result->fetch_assoc()) {
-
-
-
+                    $teacher_image = $info['image'];
                 ?>
                     <tr>
                         <td class="table_td"><?php echo "{$info['name']}" ?></td>
                         <td class="table_td"><?php echo "{$info['description']}" ?></td>
                         <td class="table_td">
-                            <img height="100px" width="100px" src="<?php echo $info['image']; ?>" alt="Teacher Image">
+                            <img height="100px" width="100px" src="<?php echo $teacher_image; ?>" alt="Teacher Image">
                         </td>
                         <td class="table_td"><?php echo "{$info['password']}" ?>
 

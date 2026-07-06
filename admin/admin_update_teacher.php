@@ -8,7 +8,7 @@ session_start();
 echo "<!-- Session Debug: " . print_r($_SESSION, true) . " -->";
 
 if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
@@ -18,6 +18,8 @@ $password = "";
 $db = "schoolproject";
 
 $data = mysqli_connect($host, $user, $password, $db);
+$sql = "SELECT * FROM teacher";
+$result = mysqli_query($data, $sql);
 
 
 
@@ -36,8 +38,12 @@ if (isset($_POST['update_teacher'])) {
     $file = $_FILES['image']['name'];
 
     if ($file) {
-        $dst = "./image/" . $file;
-        $dst_db = "image/" . $file;
+        $imageFolder = dirname(__DIR__) . '/image';
+        if (!is_dir($imageFolder)) {
+            mkdir($imageFolder, 0755, true);
+        }
+        $dst = $imageFolder . '/' . $file;
+        $dst_db = "../image/" . $file;
         move_uploaded_file($_FILES['image']['tmp_name'], $dst);
         $sql2 = "UPDATE teacher SET name='$t_name',description='$t_des',image='$dst_db',password='$t_pass' WHERE id='$t_id';";
     } else {
@@ -47,7 +53,8 @@ if (isset($_POST['update_teacher'])) {
     $result2 = mysqli_query($data, $sql2);
 
     if ($result2) {
-        header('location:admin_view_teacher.php');
+        header('Location: admin_view_teacher.php');
+        exit;
     }
 }
 
@@ -87,9 +94,9 @@ if (isset($_POST['update_teacher'])) {
 
 <body>
     <header class="header">
-        <a href=" ">Admin Deshboard</a>
+        <a href="adminhome.php">Admin Dashboard</a>
         <div class="logout">
-            <a href="logout.php">Logout</a>
+            <a href="../logout.php">Logout</a>
         </div>
     </header>
 
@@ -98,11 +105,13 @@ if (isset($_POST['update_teacher'])) {
         <ul>
             <li><a href="admission.php">Admission</a></li>
             <li><a href="add_student.php">Add Student</a></li>
-            <li><a href="view_student.php">View Student</a></li>
-            <li><a href="">Add Teacher</a></li>
-            <li><a href="">View Teacher</a></li>
-            <li><a href="">Add Courses</a></li>
-            <li><a href="">View Courses</a></li>
+            <li><a href="../students/view_student.php">View Student</a></li>
+            <li><a href="admin_add_courses.php">Add Courses</a></li>
+            <li><a href="admin_view_courses.php">View Courses</a></li>
+            <li><a href="admin_add_teacher.php">Add Teacher</a></li>
+            <li><a href="admin_view_teacher.php">View Teacher</a></li>
+            <li><a href="admin_add_courses.php">Add Courses</a></li>
+            <li><a href="admin_view_courses.php">View Courses</a></li>
         </ul>
     </aside>
     <div class="content">

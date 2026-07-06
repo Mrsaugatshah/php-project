@@ -8,7 +8,7 @@ session_start();
 echo "<!-- Session Debug: " . print_r($_SESSION, true) . " -->";
 
 if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'student') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
@@ -23,7 +23,7 @@ if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'student') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="admin.css">
+    <link rel="stylesheet" type="text/css" href="../admin/admin.css">
     <title>Admin homet</title>
     <style>
         .content {

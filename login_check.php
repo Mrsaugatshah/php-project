@@ -26,17 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($row["usertype"] === "student") {
             $_SESSION['username'] = $name;
             $_SESSION['usertype'] = "student";
-            header("Location: student.home.php");
+            header("Location: students/student.home.php");
             exit;
         } elseif ($row["usertype"] === "admin") {
             $_SESSION['username'] = $name;
             $_SESSION['usertype'] = "admin";
-            header("Location: adminhome.php");
+            header("Location: admin/adminhome.php");
             exit;
         } elseif ($row["usertype"] === "teacher") {
             $_SESSION['username'] = $name;
             $_SESSION['usertype'] = "teacher";
-            header("Location: teacher_home.php");
+            header("Location: teachers/teacher_home.php");
             exit;
         }
     }

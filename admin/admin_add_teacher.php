@@ -8,7 +8,7 @@ session_start();
 echo "<!-- Session Debug: " . print_r($_SESSION, true) . " -->";
 
 if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
@@ -23,8 +23,12 @@ if (isset($_POST['add_teacher'])) {
     $t_name = $_POST['name'];
     $t_description = $_POST['description'];
     $file = $_FILES['image']['name'];
-    $dst = './image/' . $file;
-    $dst_db = "image/" . $file;
+    $imageFolder = dirname(__DIR__) . '/image';
+    if (!is_dir($imageFolder)) {
+        mkdir($imageFolder, 0755, true);
+    }
+    $dst = $imageFolder . '/' . $file;
+    $dst_db = "../image/" . $file;
     $t_password = $_POST['password'];
     move_uploaded_file($_FILES['image']['tmp_name'], $dst);
     $sql = "INSERT INTO teacher(name,description,image,password)
@@ -136,9 +140,9 @@ if (isset($_POST['add_teacher'])) {
 
 <body>
     <header class="header">
-        <a href=" "> Add Teacher</a>
+        <a href="adminhome.php">Admin Dashboard</a>
         <div class="logout">
-            <a href="logout.php">Logout</a>
+            <a href="../logout.php">Logout</a>
         </div>
     </header>
 
@@ -147,11 +151,12 @@ if (isset($_POST['add_teacher'])) {
         <ul>
             <li><a href="admission.php">Admission</a></li>
             <li><a href="add_student.php">Add Student</a></li>
-            <li><a href="view_student.php">View Student</a></li>
+            <li><a href="../students/view_student.php">View Student</a></li>
             <li><a href="admin_add_teacher.php">Add Teacher</a></li>
             <li><a href="admin_view_teacher.php">View Teacher</a></li>
             <li><a href="admin_add_courses.php">Add Courses</a></li>
-            <li><a href="">View Courses</a></li>
+            <li><a href="admin_view_courses.php">View Courses</a></li>
+
         </ul>
     </aside>
     <div class="content">

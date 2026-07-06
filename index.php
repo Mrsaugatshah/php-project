@@ -42,10 +42,9 @@ if (!$result) {
     <nav class="navbar">
         <label class="logo">w-school</label>
         <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">Contact</a></li>
-            <li><a href="">Admission</a></li>
+            <li><a href="index.php">Home</a></li>
             <li><a href="login.php" class="login">Login</a></li>
+            <li><a href="#admission-form">Admission</a></li>
         </ul>
     </nav>
 
@@ -71,10 +70,13 @@ if (!$result) {
                 <div class="teacher-row">
                     <?php
                     while ($info = $result->fetch_assoc()) {
-
+                        $teacherImage = !empty($info['image']) ? $info['image'] : 'img/teacher1.png';
+                        if (strpos($teacherImage, 'http') === false && strpos($teacherImage, 'img/') === false && strpos($teacherImage, 'image/') === false) {
+                            $teacherImage = 'img/' . basename($teacherImage);
+                        }
                     ?>
                         <div class="teacher-box">
-                            <img class="teacher" src="<?php echo ($info['image']); ?>" alt="<?php echo ($info['name']); ?>">
+                            <img class="teacher" src="<?php echo $teacherImage; ?>" alt="<?php echo ($info['name']); ?>">
                             <div class="teacher-info">
                                 <h3><?php echo ($info['name']); ?></h3>
                                 <h5><?php echo ($info['description']); ?></h5>
@@ -124,7 +126,7 @@ if (!$result) {
         <h1 class="admission-title">Admission Form</h1>
     </center>
 
-    <div class="admission-form">
+    <div class="admission-form" id="admission-form">
         <form action="data_check.php" method="POST">
             <div class="form-group">
                 <label for="student-id">Id</label>

@@ -3,6 +3,15 @@
     margin: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+#admission-form {
+    
+    padding-left: 20px;
+
+}
 
 .navbar{
     position: fixed;
@@ -107,14 +116,28 @@ ul li  a{
     max-width: 88%;
     text-align: center;
 }
-.login{
-      padding: 10px 20px;   
-    margin: 15px;         
-    background-color: rgb(36, 168, 9);
+.login {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    margin: 0;
+    background: #2563eb;
     color: white;
-    border: none;
+    border: 1px solid #1d4ed8;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: 600;
+    line-height: 1.2;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.18);
+    transition: all 0.2s ease;
+}
+
+.login:hover {
+    color: white;
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.22);
 }
 
 
@@ -292,14 +315,15 @@ ul li  a{
 
 .admission-title {
     font-size: 2.4rem;
-    margin: 36px auto 12px;
+    margin: 90px auto 12px;
+    padding-top: 30px;
     color: #111827;
     letter-spacing: 0.04em;
 }
 
 .admission-form {
     max-width: 500px;
-    margin: 40px auto 80px;
+    margin: 20px auto 80px;
     padding: 30px;
     background: #ffffff;
     border-radius: 24px;

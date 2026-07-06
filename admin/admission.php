@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
@@ -37,7 +37,7 @@ if (!$result) {
 
 <body>
     <?php
-    include 'admin_sidebar.php';
+    include __DIR__ . '/admin_sidebar.php';
 
 
 

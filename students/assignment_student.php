@@ -8,7 +8,7 @@ session_start();
 echo "<!-- Session Debug: " . print_r($_SESSION, true) . " -->";
 
 if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'student') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
@@ -23,7 +23,7 @@ if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'student') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="admin.css">
+    <link rel="stylesheet" type="text/css" href="../admin/admin.css">
     <title>Admin homet</title>
     <style>
         .content {
@@ -90,6 +90,8 @@ if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'student') {
     $db = "schoolproject";
 
     $conn = mysqli_connect($host, $user, $password, $db);
+    $rows = [];
+    $query_error = '';
     if (!$conn) {
         echo "<p>Database connection failed: " . mysqli_connect_error() . "</p>";
     } else {
@@ -133,9 +135,9 @@ if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'student') {
                             <?php
                             if (!empty($row['file'])) {
                                 $fileName = basename($row['file']);
-                                $uploadPath = __DIR__ . '/uploads/' . $fileName;
+                                $uploadPath = dirname(__DIR__) . '/uploads/' . $fileName;
                                 if (file_exists($uploadPath)) {
-                                    $fileHref = 'uploads/' . rawurlencode($fileName);
+                                    $fileHref = '../uploads/' . rawurlencode($fileName);
                                     echo '<a class="download-link" href="' . $fileHref . '" target="_blank" download>' . $fileName . '</a>';
                                 } else {
                                     echo 'File not found';

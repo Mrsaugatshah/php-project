@@ -8,7 +8,7 @@ session_start();
 echo "<!-- Session Debug: " . print_r($_SESSION, true) . " -->";
 
 if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'admin') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
@@ -28,9 +28,9 @@ if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'admin') {
 
 <body>
     <header class="header">
-        <a href=" ">Admin Deshboard</a>
+        <a href="adminhome.php">Admin Dashboard</a>
         <div class="logout">
-            <a href="logout.php">Logout</a>
+            <a href="../logout.php">Logout</a>
         </div>
     </header>
 
@@ -39,11 +39,12 @@ if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'admin') {
         <ul>
             <li><a href="admission.php">Admission</a></li>
             <li><a href="add_student.php">Add Student</a></li>
-            <li><a href="view_student.php">View Student</a></li>
+            <li><a href="../students/view_student.php">View Student</a></li>
             <li><a href="admin_add_teacher.php">Add Teacher</a></li>
             <li><a href="admin_view_teacher.php">View Teacher</a></li>
             <li><a href="admin_add_courses.php">Add Courses</a></li>
-            <li><a href="">View Courses</a></li>
+            <li><a href="admin_view_courses.php">View Courses</a></li>
+
         </ul>
     </aside>
     <div class="content">

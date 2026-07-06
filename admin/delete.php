@@ -19,6 +19,7 @@ if ($_GET['student_id']) {
     if ($result) {
         $_SESSION['message'] = 'Delete student is sucessfull ';
 
-        header("location:view_student.php");
+        header("Location: ../students/view_student.php");
+        exit;
     }
 }

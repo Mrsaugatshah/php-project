@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 session_start();
 
 if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'teacher') {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 
@@ -39,7 +39,7 @@ if (isset($_POST['add_assignment'])) {
         $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
 
         if (in_array($ext, $allowed, true)) {
-            $folder = __DIR__ . '/uploads';
+            $folder = dirname(__DIR__) . '/uploads';
             if (!is_dir($folder)) {
                 mkdir($folder, 0755, true);
             }
@@ -78,7 +78,7 @@ $studentResult = mysqli_query($data, $studentQuery);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="admin.css">
+    <link rel="stylesheet" type="text/css" href="../admin/admin.css">
     <title>Teacher Assignment</title>
     <style>
         .content {
