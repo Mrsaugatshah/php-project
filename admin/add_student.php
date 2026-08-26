@@ -113,7 +113,7 @@ if (isset($_POST['add_student'])) {
             <h1>add_student</h1>
 
             <div class="div_dig">
-                <form action="#" method="POST">
+                <form id="studentForm" action="#" method="POST">
                     <div>
                         <label for="">Username</label>
                         <input type="text" name="name">
@@ -146,7 +146,76 @@ if (isset($_POST['add_student'])) {
     </div>
     </center>
 
+    <script>
+        document.getElementById("studentForm").addEventListener("submit", function(e) {
 
+            let username = document.getElementsByName("name")[0].value.trim();
+            let email = document.getElementsByName("email")[0].value.trim();
+            let phone = document.getElementsByName("phone")[0].value.trim();
+            let password = document.getElementsByName("password")[0].value.trim();
+
+            // Username validation
+            if (username === "") {
+                alert("Please enter username.");
+                e.preventDefault();
+                return;
+            }
+
+            let usernamePattern = /^[A-Za-z\s]+$/;
+            if (!usernamePattern.test(username)) {
+                alert("Username should contain only letters.");
+                e.preventDefault();
+                return;
+            }
+
+            // Email validation
+            if (email === "") {
+                alert("Please enter email.");
+                e.preventDefault();
+                return;
+            }
+
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Invalid email address.");
+                e.preventDefault();
+                return;
+            }
+
+            // Phone validation
+            if (phone === "") {
+                alert("Please enter phone number.");
+                e.preventDefault();
+                return;
+            }
+
+            let phonePattern = /^(98|97)\d{8}$/;
+
+            if (!phonePattern.test(phone)) {
+                alert("Phone number must start with 98 or 97 and be exactly 10 digits.");
+                e.preventDefault();
+                return;
+            }
+
+            // Password validation
+            if (password === "") {
+                alert("Please enter password.");
+                e.preventDefault();
+                return;
+            }
+
+            
+            let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+
+            if (!passwordPattern.test(password)) {
+                alert("Password must be at least 6 characters and include an uppercase letter, a lowercase letter, a number, and a special character.");
+                e.preventDefault();
+                return;
+            }
+
+        });
+    </script>
 
 </body>
 

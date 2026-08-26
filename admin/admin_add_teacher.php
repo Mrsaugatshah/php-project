@@ -162,7 +162,7 @@ if (isset($_POST['add_teacher'])) {
     <div class="content">
         <div class="form-wrapper">
             <h1>Add Teacher</h1>
-            <form action="#" method="POST" enctype="multipart/form-data">
+            <form id="teacherForm" action="#" method="POST" enctype="multipart/form-data">
                 <div class="div_deg">
                     <label>Teacher Name</label>
                     <input type="text" name="name" class="btn-name" placeholder="Enter teacher name">
@@ -190,6 +190,70 @@ if (isset($_POST['add_teacher'])) {
             </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById("teacherForm").addEventListener("submit", function(e) {
+
+            let name = document.getElementsByName("name")[0].value.trim();
+            let description = document.getElementsByName("description")[0].value.trim();
+            let image = document.getElementsByName("image")[0];
+            let password = document.getElementsByName("password")[0].value.trim();
+
+            // Teacher name
+            if (name === "") {
+                alert("Please enter the teacher name.");
+                e.preventDefault();
+                return;
+            }
+
+            // Only letters and spaces
+            let namePattern = /^[A-Za-z\s]+$/;
+            if (!namePattern.test(name)) {
+                alert("Teacher name should contain only letters.");
+                e.preventDefault();
+                return;
+            }
+
+            // Description
+            if (description === "") {
+                alert("Please enter the description.");
+                e.preventDefault();
+                return;
+            }
+
+            // Image
+            if (image.files.length === 0) {
+                alert("Please select an image.");
+                e.preventDefault();
+                return;
+            }
+
+            // Image type
+            let allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+            if (!allowedTypes.includes(image.files[0].type)) {
+                alert("Only JPG, JPEG, and PNG images are allowed.");
+                e.preventDefault();
+                return;
+            }
+
+            // Password
+            if (password === "") {
+                alert("Please enter the password.");
+                e.preventDefault();
+                return;
+            }
+
+            let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+
+
+            if (!passwordPattern.test(password)) {
+                alert("Password must be at least 6 characters and include an uppercase letter, a lowercase letter, a number, and a special character.");
+                e.preventDefault();
+                return;
+            }
+
+        });
+    </script>
 
 
 

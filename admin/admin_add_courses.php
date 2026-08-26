@@ -82,7 +82,7 @@ if (isset($_POST['add_course'])) {
         <?php if (!empty($message)): ?>
             <p><?php echo htmlspecialchars($message); ?></p>
         <?php endif; ?>
-        <form action="" method="post">
+        <form id="courseForm" action="" method="post">
             <label>Course Name:</label>
             <input type="text" name="course_name" required><br><br>
 
@@ -111,7 +111,52 @@ if (isset($_POST['add_course'])) {
             <input type="submit" name="add_course" value="Add Course">
         </form>
     </div>
+    <script>
+        document.getElementById("courseForm").addEventListener("submit", function(e) {
 
+            let courseName = document.getElementsByName("course_name")[0].value.trim();
+            let courseCode = document.getElementsByName("course_code")[0].value.trim();
+            let teacher = document.getElementsByName("teacher_id")[0].value;
+            let duration = document.getElementsByName("duration")[0].value.trim();
+
+            // Course Name
+            if (courseName === "") {
+                alert("Please enter the course name.");
+                e.preventDefault();
+                return;
+            }
+
+            // Course Code
+            if (courseCode === "") {
+                alert("Please enter the course code.");
+                e.preventDefault();
+                return;
+            }
+
+            // Allow only letters, numbers and hyphen (e.g. CS101, BCA-201)
+            let codePattern = /^[A-Za-z0-9-]+$/;
+            if (!codePattern.test(courseCode)) {
+                alert("Invalid course code.");
+                e.preventDefault();
+                return;
+            }
+
+            // Teacher
+            if (teacher === "") {
+                alert("Please select a teacher.");
+                e.preventDefault();
+                return;
+            }
+
+            // Duration
+            if (duration === "") {
+                alert("Please enter the course duration.");
+                e.preventDefault();
+                return;
+            }
+
+        });
+    </script>
 
 
 </body>

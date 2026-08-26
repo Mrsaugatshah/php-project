@@ -135,7 +135,7 @@ if (!$info) {
             <h1>Update Student</h1>
 
             <div class="div_dig">
-                <form action="#" method="POST">
+                <form id="updateStudentForm" action="#" method="POST">
                     <div>
                         <label for="">Username</label>
                         <input type="text" name="name" value="<?php echo "{$info['username']}"; ?>">
@@ -163,6 +163,72 @@ if (!$info) {
             </div>
         </center>
     </div>
+    <script>
+        document.getElementById("updateStudentForm").addEventListener("submit", function(e) {
+
+            let username = document.getElementsByName("name")[0].value.trim();
+            let email = document.getElementsByName("email")[0].value.trim();
+            let phone = document.getElementsByName("phone")[0].value.trim();
+            let password = document.getElementsByName("password")[0].value.trim();
+
+            // Username
+            if (username === "") {
+                alert("Please enter the username.");
+                e.preventDefault();
+                return;
+            }
+
+            // Only letters and spaces
+            let namePattern = /^[A-Za-z\s]+$/;
+            if (!namePattern.test(username)) {
+                alert("Username should contain only letters.");
+                e.preventDefault();
+                return;
+            }
+
+            // Email
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === "") {
+                alert("Please enter the email.");
+                e.preventDefault();
+                return;
+            }
+
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                e.preventDefault();
+                return;
+            }
+
+            // Phone (10 digits)
+            let phonePattern = /^[0-9]{10}$/;
+            if (phone === "") {
+                alert("Please enter the phone number.");
+                e.preventDefault();
+                return;
+            }
+
+            if (!phonePattern.test(phone)) {
+                alert("Phone number must be exactly 10 digits.");
+                e.preventDefault();
+                return;
+            }
+
+            // Password
+            if (password === "") {
+                alert("Please enter the password.");
+                e.preventDefault();
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                e.preventDefault();
+                return;
+            }
+
+        });
+    </script>
 
 </body>
 

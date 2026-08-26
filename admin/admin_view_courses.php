@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 
 session_start();
 
-// Debug: Check session variables
+
 echo "<!-- Session Debug: " . print_r($_SESSION, true) . " -->";
 
 if (!isset($_SESSION['username']) || $_SESSION['usertype'] !== 'admin') {

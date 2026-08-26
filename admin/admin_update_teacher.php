@@ -118,7 +118,7 @@ if (isset($_POST['update_teacher'])) {
         <center>
             <h1>Update Teacher Data</h1>
 
-            <form class="form_deg" method="POST" enctype="multipart/form-data">
+            <form id="updateTeacherForm" class="form_deg" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="teacher_id" value="<?php echo $t_id; ?>">
                 <div>
                     <label>Teacher Name</label>
@@ -156,6 +156,62 @@ if (isset($_POST['update_teacher'])) {
 
 
     </div>
+    <script>
+        document.getElementById("updateTeacherForm").addEventListener("submit", function(e) {
+
+            let name = document.getElementsByName("name")[0].value.trim();
+            let description = document.getElementsByName("description")[0].value.trim();
+            let password = document.getElementsByName("password")[0].value.trim();
+            let image = document.getElementsByName("image")[0];
+
+            // Teacher name
+            if (name === "") {
+                alert("Please enter the teacher name.");
+                e.preventDefault();
+                return;
+            }
+
+            // Only letters and spaces
+            let namePattern = /^[A-Za-z\s]+$/;
+            if (!namePattern.test(name)) {
+                alert("Teacher name should contain only letters.");
+                e.preventDefault();
+                return;
+            }
+
+            // Description
+            if (description === "") {
+                alert("Please enter the teacher description.");
+                e.preventDefault();
+                return;
+            }
+
+            // Password
+            if (password === "") {
+                alert("Please enter the password.");
+                e.preventDefault();
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                e.preventDefault();
+                return;
+            }
+
+            // Validate image only if a new image is selected
+            if (image.files.length > 0) {
+                let allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+
+                if (!allowedTypes.includes(image.files[0].type)) {
+                    alert("Only JPG, JPEG, and PNG images are allowed.");
+                    e.preventDefault();
+                    return;
+                }
+            }
+
+        });
+    </script>
 
 
 

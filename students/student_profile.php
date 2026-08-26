@@ -106,7 +106,7 @@ if (isset($_POST['update_profile'])) {
     ?>
     <div class="content">
 
-        <form action="#" method="POST">
+        <form id="profileForm" action="#" method="POST">
             <div>
                 <label>name </label>
                 <input type="text" name="name" value="<?php echo "{$info['username']}" ?>">
@@ -143,6 +143,56 @@ if (isset($_POST['update_profile'])) {
 
 
     </div>
+    <script>
+        document.getElementById("profileForm").addEventListener("submit", function(e) {
+
+            let email = document.getElementsByName("email")[0].value.trim();
+            let phone = document.getElementsByName("phone")[0].value.trim();
+            let password = document.getElementsByName("password")[0].value.trim();
+
+            // Email validation
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === "") {
+                alert("Email is required.");
+                e.preventDefault();
+                return;
+            }
+
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                e.preventDefault();
+                return;
+            }
+
+            // Phone validation
+            let phonePattern = /^[0-9]{10}$/;
+            if (phone === "") {
+                alert("Phone number is required.");
+                e.preventDefault();
+                return;
+            }
+
+            if (!phonePattern.test(phone)) {
+                alert("Phone number must contain exactly 10 digits.");
+                e.preventDefault();
+                return;
+            }
+
+            // Password validation
+            if (password === "") {
+                alert("Password is required.");
+                e.preventDefault();
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                e.preventDefault();
+                return;
+            }
+
+        });
+    </script>
 
 
 

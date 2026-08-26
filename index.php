@@ -35,7 +35,7 @@ if (!$result) {
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -152,6 +152,62 @@ if (!$result) {
             </div>
         </form>
     </div>
+    <script>
+        document.querySelector("form").addEventListener("submit", function(e) {
+
+            let id = document.getElementById("student-id").value;
+            let name = document.getElementById("student-name").value;
+            let email = document.getElementById("student-email").value;
+            let phone = document.getElementById("student-phone").value;
+            let message = document.getElementById("student-message").value;
+
+            // ID validation
+            if (id == "") {
+                alert("Please enter your ID");
+                e.preventDefault();
+                return;
+            }
+
+            // Name validation
+            let namePattern = /^[A-Za-z ]+$/;
+            if (name == "" || !namePattern.test(name)) {
+                alert("Please enter a valid name");
+                e.preventDefault();
+                return;
+            }
+
+            // Email validation
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email");
+                e.preventDefault();
+                return;
+            }
+
+            if (phone === "") {
+                alert("Please enter phone number.");
+                e.preventDefault();
+                return;
+            }
+
+            let phonePattern = /^(98|97)\d{8}$/;
+
+            if (!phonePattern.test(phone)) {
+                alert("Phone number must start with 98 or 97 and be exactly 10 digits.");
+                e.preventDefault();
+                return;
+            }
+
+            // Message validation
+            if (message.length < 10) {
+                alert("Message must contain at least 10 characters");
+                e.preventDefault();
+                return;
+            }
+
+            alert("Application Submitted Successfully!");
+        });
+    </script>
 
 
     <footer class="site-footer">
@@ -175,7 +231,7 @@ if (!$result) {
                 <h4>contact</h4>
                 <p>123 Main Street, City</p>
                 <p>Email: info@w-school.example</p>
-                <p>Phone: +1 (555) 123-4567</p>
+                <p>Phone: +977 9823345692</p>
             </div>
 
             <div class="footer-col social">

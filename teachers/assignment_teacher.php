@@ -145,7 +145,7 @@ $studentResult = mysqli_query($data, $studentQuery);
         <?php if ($message !== "") { ?>
             <div class="message"><?php echo $message; ?></div>
         <?php } ?>
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form id="assignmentForm" action="#" method="POST" enctype="multipart/form-data">
             <div>
                 <label for="student">Student</label>
                 <select name="student" id="student" required>
@@ -181,6 +181,65 @@ $studentResult = mysqli_query($data, $studentQuery);
             </div>
         </form>
     </div>
+    <script>
+        document.getElementById("assignmentForm").addEventListener("submit", function(e) {
+
+            let student = document.getElementById("student").value;
+            let title = document.getElementById("title").value.trim();
+            let description = document.getElementById("description").value.trim();
+            let deadline = document.getElementById("deadline").value;
+            let file = document.getElementById("file");
+
+            // Student validation
+            if (student === "") {
+                alert("Please select a student.");
+                e.preventDefault();
+                return;
+            }
+
+            // Title validation
+            if (title === "") {
+                alert("Please enter the assignment title.");
+                e.preventDefault();
+                return;
+            }
+
+            // Description validation
+            if (description === "") {
+                alert("Please enter the assignment description.");
+                e.preventDefault();
+                return;
+            }
+
+            // Deadline validation
+            if (deadline === "") {
+                alert("Please select a deadline.");
+                e.preventDefault();
+                return;
+            }
+
+            // Prevent past dates
+            let today = new Date().toISOString().split("T")[0];
+            if (deadline < today) {
+                alert("Deadline cannot be in the past.");
+                e.preventDefault();
+                return;
+            }
+
+            // File type validation (optional)
+            if (file.value !== "") {
+                let allowedExtensions = /(\.pdf|\.doc|\.docx|\.zip)$/i;
+
+                if (!allowedExtensions.exec(file.value)) {
+                    alert("Only PDF, DOC, DOCX, and ZIP files are allowed.");
+                    file.value = "";
+                    e.preventDefault();
+                    return;
+                }
+            }
+
+        });
+    </script>
 
 </body>
 

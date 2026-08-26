@@ -20,7 +20,7 @@
             session_destroy();
             ?>
         </h4>
-        <form action="login_check.php" method="POST">
+        <form id="loginForm" action="login_check.php" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input id="username" type="text" name="username" autocomplete="username" placeholder="Enter your username">
@@ -34,6 +34,36 @@
             </div>
         </form>
     </div>
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            let username = document.getElementById("username").value.trim();
+            let password = document.getElementById("password").value.trim();
+
+            // Username validation
+            if (username === "") {
+                alert("Invalid credentials.");
+                document.getElementById("username").focus();
+                event.preventDefault();
+                return;
+            }
+
+            // Password validation
+            if (password === "") {
+                alert("Invalid credentials.");
+                document.getElementById("password").focus();
+                event.preventDefault();
+                return;
+            }
+
+            // Minimum password length
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                document.getElementById("password").focus();
+                event.preventDefault();
+                return;
+            }
+        });
+    </script>
 </body>
 
 </html>
