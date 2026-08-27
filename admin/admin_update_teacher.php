@@ -122,12 +122,12 @@ if (isset($_POST['update_teacher'])) {
                 <input type="hidden" name="teacher_id" value="<?php echo $t_id; ?>">
                 <div>
                     <label>Teacher Name</label>
-                    <input type="text" name="name" value="<?php echo $info['name']; ?>">
+                    <input type="text" name="name" value="<?php echo $info['name']; ?>" required pattern="[A-Za-z ]+">
 
                 </div>
                 <div>
                     <label>About teacher</label>
-                    <textarea name="description"><?php echo $info['description']; ?></textarea>
+                    <textarea name="description" required><?php echo $info['description']; ?></textarea>
 
                 </div>
                 <div>
@@ -137,13 +137,13 @@ if (isset($_POST['update_teacher'])) {
                 </div>
                 <div>
                     <label>Teacher New Image</label>
-                    <input type="file" name="image">
+                    <input type="file" name="image" accept="image/png,image/jpeg">
 
                 </div>
 
                 <div>
                     <label>password </label>
-                    <input type="text" name="password" value="<?php echo "{$info['password']}" ?>">
+                    <input type="password" name="password" value="<?php echo "{$info['password']}" ?>" required minlength="6">
 
                 </div>
                 <div class="btn-submit">

@@ -8,7 +8,8 @@
 <aside>
     <ul>
         <li><a href="student_profile.php">My Profile</a></li>
-        <li><a href="register_course.php">Register Courses</a></li>
+
         <li><a href="assignment_student.php">Assignment</a></li>
+        <li><a href="views_results.php">My Results</a></li>
     </ul>
 </aside>

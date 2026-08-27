@@ -173,7 +173,7 @@ $studentResult = mysqli_query($data, $studentQuery);
             </div>
             <div>
                 <label for="file">file</label>
-                <input type="file" name="file" id="file">
+                <input type="file" name="file" id="file" accept=".pdf,.doc,.docx,.zip">
             </div>
 
             <div>

@@ -14,5 +14,6 @@
         <li><a href="admin_view_teacher.php">View Teacher</a></li>
         <li><a href="admin_add_courses.php">Add Courses</a></li>
         <li><a href="admin_view_courses.php">View Courses</a></li>
+        <li><a href="add_results.php">Send Results</a></li>
     </ul>
 </aside>

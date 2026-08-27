@@ -23,11 +23,11 @@
         <form id="loginForm" action="login_check.php" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input id="username" type="text" name="username" autocomplete="username" placeholder="Enter your username">
+                <input id="username" type="text" name="username" autocomplete="username" placeholder="Enter your username" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input id="password" type="password" name="password" autocomplete="current-password" placeholder="Enter your password">
+                <input id="password" type="password" name="password" autocomplete="current-password" placeholder="Enter your password" required minlength="6">
             </div>
             <div class="form-action">
                 <input type="submit" class="submit-btn" name="submit" value="Login">

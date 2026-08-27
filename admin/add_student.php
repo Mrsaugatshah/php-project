@@ -116,23 +116,23 @@ if (isset($_POST['add_student'])) {
                 <form id="studentForm" action="#" method="POST">
                     <div>
                         <label for="">Username</label>
-                        <input type="text" name="name">
+                        <input type="text" name="name" required pattern="[A-Za-z ]+">
                     </div>
 
                     <div>
                         <label for="">Email</label>
-                        <input type="email" name="email">
+                        <input type="email" name="email" required>
                     </div>
 
                     <div>
                         <label for="">Phone</label>
-                        <input type="number" name="phone">
+                        <input type="tel" name="phone" required pattern="(98|97)[0-9]{8}" inputmode="numeric">
                     </div>
 
 
                     <div>
                         <label for="">Password</label>
-                        <input type="password" name="password">
+                        <input type="password" name="password" required minlength="6">
                     </div>
 
 

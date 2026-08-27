@@ -87,7 +87,7 @@ if (isset($_POST['add_course'])) {
             <input type="text" name="course_name" required><br><br>
 
             <label>Course Code</label>
-            <input type="text" name="course_code"><br><br>
+            <input type="text" name="course_code" required pattern="[A-Za-z0-9-]+"><br><br>
 
             <label>Teacher</label>
             <select name="teacher_id" required>
@@ -106,7 +106,7 @@ if (isset($_POST['add_course'])) {
             </select><br><br>
 
             <label>Duration</label><br>
-            <input type="text" name="duration" placeholder="e.g., 6 Months"><br><br>
+            <input type="text" name="duration" placeholder="e.g., 6 Months" required><br><br>
 
             <input type="submit" name="add_course" value="Add Course">
         </form>

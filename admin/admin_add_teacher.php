@@ -165,22 +165,22 @@ if (isset($_POST['add_teacher'])) {
             <form id="teacherForm" action="#" method="POST" enctype="multipart/form-data">
                 <div class="div_deg">
                     <label>Teacher Name</label>
-                    <input type="text" name="name" class="btn-name" placeholder="Enter teacher name">
+                    <input type="text" name="name" class="btn-name" placeholder="Enter teacher name" required pattern="[A-Za-z ]+">
                 </div>
 
                 <div class="form-row">
                     <label>Description</label>
-                    <input type="text" name="description" class="btn-description" placeholder="Enter description">
+                    <input type="text" name="description" class="btn-description" placeholder="Enter description" required>
                 </div>
 
                 <div class="form-row">
                     <label>Image</label>
-                    <input type="file" name="image">
+                    <input type="file" name="image" required accept="image/png,image/jpeg">
                 </div>
 
                 <div>
                     <label>password </label>
-                    <input type="text" name="password" placeholder="Enter password">
+                    <input type="password" name="password" placeholder="Enter password" required minlength="6">
 
                 </div>
 

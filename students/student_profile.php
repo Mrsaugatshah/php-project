@@ -109,24 +109,24 @@ if (isset($_POST['update_profile'])) {
         <form id="profileForm" action="#" method="POST">
             <div>
                 <label>name </label>
-                <input type="text" name="name" value="<?php echo "{$info['username']}" ?>">
+                <input type="text" name="name" value="<?php echo "{$info['username']}" ?>" readonly>
 
             </div>
             <div>
                 <label>Email </label>
-                <input type="text" name="email" value="<?php echo "{$info['email']}" ?>">
+                <input type="email" name="email" value="<?php echo "{$info['email']}" ?>" required>
 
             </div>
 
             <div>
                 <label>Phone</label>
-                <input type="number" name="phone" value="<?php echo "{$info['phone']}" ?>">
+                <input type="tel" name="phone" value="<?php echo "{$info['phone']}" ?>" required pattern="[0-9]{10}" inputmode="numeric">
 
             </div>
 
             <div>
                 <label>password </label>
-                <input type="text" name="password" value="<?php echo "{$info['password']}" ?>">
+                <input type="password" name="password" value="<?php echo "{$info['password']}" ?>" required minlength="6">
 
             </div>
 

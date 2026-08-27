@@ -138,22 +138,22 @@ if (!$info) {
                 <form id="updateStudentForm" action="#" method="POST">
                     <div>
                         <label for="">Username</label>
-                        <input type="text" name="name" value="<?php echo "{$info['username']}"; ?>">
+                        <input type="text" name="name" value="<?php echo "{$info['username']}"; ?>" required pattern="[A-Za-z ]+">
                     </div>
 
                     <div>
                         <label for="">Email</label>
-                        <input type="email" name="email" value="<?php echo "{$info['email']}"; ?>">
+                        <input type="email" name="email" value="<?php echo "{$info['email']}"; ?>" required>
                     </div>
 
                     <div>
                         <label for="">Phone</label>
-                        <input type="number" name="phone" value="<?php echo "{$info['phone']}"; ?>">
+                        <input type="tel" name="phone" value="<?php echo "{$info['phone']}"; ?>" required pattern="(98|97)[0-9]{8}" inputmode="numeric">
                     </div>
 
                     <div>
                         <label for="">Password</label>
-                        <input type="password" name="password" value="<?php echo "{$info['password']}"; ?>">
+                        <input type="password" name="password" value="<?php echo "{$info['password']}"; ?>" required minlength="6">
                     </div>
 
                     <div>

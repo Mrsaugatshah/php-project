@@ -70,16 +70,23 @@ if (!$result) {
                 <div class="teacher-row">
                     <?php
                     while ($info = $result->fetch_assoc()) {
-                        $teacherImage = !empty($info['image']) ? $info['image'] : 'img/teacher1.png';
-                        if (strpos($teacherImage, 'http') === false && strpos($teacherImage, 'img/') === false && strpos($teacherImage, 'image/') === false) {
-                            $teacherImage = 'img/' . basename($teacherImage);
+                        // Teacher photos are uploaded to /image. Older records store
+                        // "../image/...", which only works from pages inside /admin.
+                        // Resolve every stored format relative to this homepage.
+                        $imageName = basename(str_replace('\\', '/', (string) $info['image']));
+                        $teacherImage = 'img/teacher1.png';
+                        foreach (["image/$imageName", "img/$imageName"] as $candidate) {
+                            if ($imageName !== '' && is_file(__DIR__ . '/' . $candidate)) {
+                                $teacherImage = $candidate;
+                                break;
+                            }
                         }
                     ?>
                         <div class="teacher-box">
-                            <img class="teacher" src="<?php echo $teacherImage; ?>" alt="<?php echo ($info['name']); ?>">
+                            <img class="teacher" src="<?php echo htmlspecialchars($teacherImage, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($info['name'], ENT_QUOTES, 'UTF-8'); ?>">
                             <div class="teacher-info">
-                                <h3><?php echo ($info['name']); ?></h3>
-                                <h5><?php echo ($info['description']); ?></h5>
+                                <h3><?php echo htmlspecialchars($info['name'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                                <h5><?php echo htmlspecialchars($info['description'], ENT_QUOTES, 'UTF-8'); ?></h5>
                             </div>
                         </div>
                     <?php
@@ -130,21 +137,21 @@ if (!$result) {
         <form action="data_check.php" method="POST">
             <div class="form-group">
                 <label for="student-id">Id</label>
-                <input id="student-id" type="text" name="id" placeholder="Enter your id">
+                <input id="student-id" type="text" name="id" placeholder="Enter your id" required>
                 <label for="student-name">Name</label>
-                <input id="student-name" type="text" name="name" placeholder="Enter your full name">
+                <input id="student-name" type="text" name="name" placeholder="Enter your full name" required pattern="[A-Za-z ]+">
             </div>
             <div class="form-group">
                 <label for="student-email">Email</label>
-                <input id="student-email" type="email" name="email" placeholder="Enter your email address">
+                <input id="student-email" type="email" name="email" placeholder="Enter your email address" required>
             </div>
             <div class="form-group">
                 <label for="student-phone">Phone</label>
-                <input id="student-phone" type="tel" name="phone" placeholder="Enter your phone no">
+                <input id="student-phone" type="tel" name="phone" placeholder="Enter your phone no" required pattern="[0-9]{10}" inputmode="numeric">
             </div>
             <div class="form-group">
                 <label for="student-message">Message</label>
-                <textarea id="student-message" name="message" placeholder="Tell us why you want to join"></textarea>
+                <textarea id="student-message" name="message" placeholder="Tell us why you want to join" required></textarea>
             </div>
 
             <div class="form-group form-action">
