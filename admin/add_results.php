@@ -95,5 +95,6 @@ $students = mysqli_query($data, "SELECT username FROM user WHERE usertype = 'stu
             <button type="submit" name="add_result">Send Result</button>
         </form>
     </div>
+    <script src="../form-validation.js" defer></script>
 </body>
 </html>

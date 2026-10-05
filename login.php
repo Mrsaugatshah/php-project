@@ -64,6 +64,7 @@
             }
         });
     </script>
+    <script src="form-validation.js" defer></script>
 </body>
 
 </html>

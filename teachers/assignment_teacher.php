@@ -241,6 +241,7 @@ $studentResult = mysqli_query($data, $studentQuery);
         });
     </script>
 
+    <script src="../form-validation.js" defer></script>
 </body>
 
 </html>

@@ -217,6 +217,7 @@ if (isset($_POST['add_student'])) {
         });
     </script>
 
+    <script src="../form-validation.js" defer></script>
 </body>
 
 </html>

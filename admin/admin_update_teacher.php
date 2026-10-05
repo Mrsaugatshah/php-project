@@ -215,6 +215,7 @@ if (isset($_POST['update_teacher'])) {
 
 
 
+    <script src="../form-validation.js" defer></script>
 </body>
 
 </html>

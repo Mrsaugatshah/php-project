@@ -196,6 +196,7 @@ if (isset($_POST['update_profile'])) {
 
 
 
+    <script src="../form-validation.js" defer></script>
 </body>
 
 </html>

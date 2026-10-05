@@ -254,6 +254,7 @@ if (!$result) {
         <div class="footer-bottom">&copy; 2026 W-School. All rights reserved.</div>
     </footer>
 
+    <script src="form-validation.js" defer></script>
 </body>
 
 </html>
