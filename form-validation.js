@@ -1,4 +1,24 @@
 (() => {
+    // Older page-specific validators still call alert(). Keep their custom
+    // messages inline so validation never interrupts the user with a popup.
+    let activeForm = null;
+    const nativeAlert = window.alert.bind(window);
+    window.alert = (message) => {
+        if (!activeForm) {
+            nativeAlert(message);
+            return;
+        }
+        let notice = activeForm.querySelector('.form-notice');
+        if (!notice) {
+            notice = document.createElement('p');
+            notice.className = 'form-notice';
+            notice.setAttribute('role', 'alert');
+            activeForm.prepend(notice);
+        }
+        notice.textContent = String(message);
+        notice.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+
     const messageFor = (field) => {
         const v = field.validity;
         if (v.valueMissing) return field.type === 'file' ? 'Please choose a file.' : 'Please fill out this field.';
@@ -13,6 +33,7 @@
     };
 
     document.querySelectorAll('form').forEach((form) => {
+        form.addEventListener('submit', () => { activeForm = form; }, true);
         // Route browser validation through the inline, accessible messages below.
         form.noValidate = true;
         const fields = [...form.querySelectorAll('input:not([type=hidden]):not([type=submit]):not([type=button]), select, textarea')];
@@ -60,6 +81,6 @@
     });
 
     const style = document.createElement('style');
-    style.textContent = `.field-error{display:block;min-height:1.2em;margin:.2rem 0 .35rem;color:#b42318;font-size:.875rem;text-align:left}.is-invalid{border-color:#b42318!important;box-shadow:0 0 0 2px rgba(180,35,24,.12)!important}.is-invalid:focus{outline-color:#b42318}`;
+    style.textContent = `.field-error{display:block;min-height:1.2em;margin:.2rem 0 .35rem;color:#b42318;font-size:.875rem;text-align:left}.form-notice{margin:0 0 1rem;padding:.75rem 1rem;border-radius:.5rem;background:#fef3f2;color:#b42318;font-size:.95rem;line-height:1.45;text-align:left}.is-invalid{border-color:#b42318!important;box-shadow:0 0 0 2px rgba(180,35,24,.12)!important}.is-invalid:focus{outline-color:#b42318}`;
     document.head.appendChild(style);
 })();

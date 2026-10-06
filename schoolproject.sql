@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `phone` VARCHAR(30) NOT NULL DEFAULT '',
   `usertype` ENUM('admin', 'teacher', 'student') NOT NULL,
   `password` VARCHAR(255) NOT NULL,
+  `image` VARCHAR(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_user_username` (`username`),
   KEY `idx_user_usertype` (`usertype`)
@@ -74,11 +75,16 @@ CREATE TABLE IF NOT EXISTS `rusult` (
 
 CREATE TABLE IF NOT EXISTS `admission` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  -- Student id entered by the applicant on the admission form.
+  `student_id` VARCHAR(20) NOT NULL,
   `name` VARCHAR(100) NOT NULL,
   `email` VARCHAR(150) NOT NULL,
   `phone` VARCHAR(30) NOT NULL,
   `message` TEXT NOT NULL,
-  PRIMARY KEY (`id`)
+  -- File name only (no directory). Stored under /uploads/students.
+  `image` VARCHAR(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `idx_admission_student_id` (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `assignment` (

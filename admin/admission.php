@@ -47,6 +47,8 @@ if (!$result) {
             <h1>Applied for Admission</h1>
             <table border="1px">
                 <tr>
+                    <th style="padding:20px;font-size:15px">Student ID</th>
+                    <th style="padding:20px;font-size:15px">Photo</th>
                     <th style="padding:20px;font-size:15px">Name</th>
                     <th style="padding:20px;font-size:15px">Email</th>
                     <th style="padding:20px;font-size:15px">Phone</th>
@@ -55,12 +57,28 @@ if (!$result) {
                 </tr>
                 <?php
                 while ($info = $result->fetch_assoc()) {
+                    // Only the generated file name is stored; resolve it under
+                    // /uploads/students and fall back to the admission list
+                    // screenshot area when the file is missing.
+                    $photoName = basename(str_replace('\\', '/', (string) ($info['image'] ?? '')));
+                    $photoPath = dirname(__DIR__) . '/uploads/students/' . $photoName;
+                    $hasPhoto = $photoName !== '' && is_file($photoPath);
                 ?>
                     <tr>
-                        <td style="padding:20px"><?php echo $info['name']; ?></td>
-                        <td style="padding:20px"><?php echo $info['email']; ?></td>
-                        <td style="padding:20px"><?php echo $info['phone']; ?></td>
-                        <td style="padding:20px"><?php echo $info['message']; ?></td>
+                        <td style="padding:20px"><?php echo htmlspecialchars($info['student_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td style="padding:20px">
+                            <?php if ($hasPhoto) { ?>
+                            <a href="../uploads/students/<?php echo rawurlencode($photoName); ?>" target="_blank" rel="noopener">
+                                <img src="../uploads/students/<?php echo rawurlencode($photoName); ?>" alt="Photo of <?php echo htmlspecialchars($info['name'], ENT_QUOTES, 'UTF-8'); ?>" style="width:80px;height:80px;object-fit:cover;border-radius:10px;border:1px solid #cbd5e1;">
+                            </a>
+                            <?php } else { ?>
+                            <span>—</span>
+                            <?php } ?>
+                        </td>
+                        <td style="padding:20px"><?php echo htmlspecialchars($info['name'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td style="padding:20px"><?php echo htmlspecialchars($info['email'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td style="padding:20px"><?php echo htmlspecialchars($info['phone'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td style="padding:20px"><?php echo htmlspecialchars($info['message'], ENT_QUOTES, 'UTF-8'); ?></td>
                     </tr>
                 <?php
                 }

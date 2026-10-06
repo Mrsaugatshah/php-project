@@ -375,6 +375,16 @@ ul li  a{
     resize: vertical;
 }
 
+.form-group input[type="file"] {
+    padding: 10px 16px;
+    background: #fff;
+}
+
+.photo-hint {
+    color: #6b7280;
+    font-size: 13px;
+}
+
 .form-action {
     margin-top: 10px;
 }

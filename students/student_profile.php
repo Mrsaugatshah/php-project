@@ -59,39 +59,18 @@ if (isset($_POST['update_profile'])) {
             margin-top: 50px;
         }
 
-        form {
-            display: inline-block;
-            width: 400px;
-            padding: 20px;
-            background: #f5f5f5;
-        }
-
-        form div {
-            margin: 15px 0;
-            text-align: left;
+        .profile-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
         }
 
         label {
             display: block;
             margin-bottom: 5px;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="password"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -105,6 +84,18 @@ if (isset($_POST['update_profile'])) {
 
     ?>
     <div class="content">
+
+        <?php
+        $photoName = basename(str_replace('\\', '/', (string) ($info['image'] ?? '')));
+        $photoFile = dirname(__DIR__) . '/uploads/students/' . $photoName;
+        if ($photoName !== '' && is_file($photoFile)) :
+        ?>
+            <div class="profile-photo-wrap">
+                <img class="profile-photo" src="../uploads/students/<?php echo rawurlencode($photoName); ?>" alt="Profile photo of <?php echo htmlspecialchars($info['username'], ENT_QUOTES, 'UTF-8'); ?>">
+            </div>
+        <?php else : ?>
+            <p>No profile photo available.</p>
+        <?php endif; ?>
 
         <form id="profileForm" action="#" method="POST">
             <div>
@@ -120,7 +111,7 @@ if (isset($_POST['update_profile'])) {
 
             <div>
                 <label>Phone</label>
-                <input type="tel" name="phone" value="<?php echo "{$info['phone']}" ?>" required pattern="[0-9]{10}" inputmode="numeric">
+                <input type="tel" name="phone" value="<?php echo "{$info['phone']}" ?>" required pattern="(98|97)[0-9]{8}" title="Enter a 10-digit Nepali mobile number starting with 98 or 97." inputmode="numeric">
 
             </div>
 
@@ -165,7 +156,7 @@ if (isset($_POST['update_profile'])) {
             }
 
             // Phone validation
-            let phonePattern = /^[0-9]{10}$/;
+            let phonePattern = /^(98|97)[0-9]{8}$/;
             if (phone === "") {
                 alert("Phone number is required.");
                 e.preventDefault();
@@ -173,7 +164,7 @@ if (isset($_POST['update_profile'])) {
             }
 
             if (!phonePattern.test(phone)) {
-                alert("Phone number must contain exactly 10 digits.");
+                alert("Enter a 10-digit Nepali mobile number starting with 98 or 97.");
                 e.preventDefault();
                 return;
             }

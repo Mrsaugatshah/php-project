@@ -72,10 +72,8 @@ if (!$info) {
         }
 
         .div_dig {
-            background-color: skyblue;
-            width: 400px;
-            padding-top: 70px;
-            padding-bottom: 70px;
+            width: min(100%, 540px);
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -148,7 +146,7 @@ if (!$info) {
 
                     <div>
                         <label for="">Phone</label>
-                        <input type="tel" name="phone" value="<?php echo "{$info['phone']}"; ?>" required pattern="(98|97)[0-9]{8}" inputmode="numeric">
+                        <input type="tel" name="phone" value="<?php echo "{$info['phone']}"; ?>" required pattern="(98|97)[0-9]{8}" title="Enter a 10-digit Nepali mobile number starting with 98 or 97." inputmode="numeric">
                     </div>
 
                     <div>
@@ -201,7 +199,7 @@ if (!$info) {
             }
 
             // Phone (10 digits)
-            let phonePattern = /^[0-9]{10}$/;
+            let phonePattern = /^(98|97)[0-9]{8}$/;
             if (phone === "") {
                 alert("Please enter the phone number.");
                 e.preventDefault();
@@ -209,7 +207,7 @@ if (!$info) {
             }
 
             if (!phonePattern.test(phone)) {
-                alert("Phone number must be exactly 10 digits.");
+                alert("Enter a 10-digit Nepali mobile number starting with 98 or 97.");
                 e.preventDefault();
                 return;
             }

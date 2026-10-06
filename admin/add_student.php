@@ -24,37 +24,42 @@ if (!$data) {
 }
 
 if (isset($_POST['add_student'])) {
-    $username = $_POST['name'];
-    $user_email = $_POST['email'];
-    $user_phone = $_POST['phone'];
-    $user_password = $_POST['password'];
+    $username = trim($_POST['name'] ?? '');
+    $user_email = trim($_POST['email'] ?? '');
+    $user_phone = trim($_POST['phone'] ?? '');
+    $user_password = $_POST['password'] ?? '';
     $usertype = "student";
 
-
-    $check = "SELECT * FROM user WHERE username='$username'";
-    $check_user = mysqli_query($data, $check);
-
-    if (!$check_user) {
-        echo "Database error: " . mysqli_error($data);
-        exit;
+    $photo = $_FILES['photo'] ?? null;
+    if (!$photo || $photo['error'] !== UPLOAD_ERR_OK || $photo['size'] <= 0 || $photo['size'] > 2 * 1024 * 1024) {
+        die('Please choose a photo no larger than 2 MB.');
+    }
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime = $finfo->file($photo['tmp_name']);
+    $extensions = ['image/jpeg' => 'jpg', 'image/png' => 'png'];
+    if (!isset($extensions[$mime]) || getimagesize($photo['tmp_name']) === false) {
+        die('Photo must be a valid JPG or PNG image.');
     }
 
-    $row_count = mysqli_num_rows($check_user);
-
-    if ($row_count >= 1) {
-        echo "Username Already Exist. Try another one";
-        exit;
+    $uploadDir = __DIR__ . '/../uploads/students';
+    if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) {
+        die('Could not create the student photo folder.');
+    }
+    $photoName = date('Ymd_His') . '_' . bin2hex(random_bytes(8)) . '.' . $extensions[$mime];
+    if (!move_uploaded_file($photo['tmp_name'], $uploadDir . '/' . $photoName)) {
+        die('Could not save the student photo.');
     }
 
-    $sql = "INSERT INTO user (username, email, phone, usertype, password) VALUES ('$username', '$user_email', '$user_phone', '$usertype', '$user_password')";
-
-    $result = mysqli_query($data, $sql);
+    $stmt = mysqli_prepare($data, 'INSERT INTO user (username, email, phone, usertype, password, image) VALUES (?, ?, ?, ?, ?, ?)');
+    mysqli_stmt_bind_param($stmt, 'ssssss', $username, $user_email, $user_phone, $usertype, $user_password, $photoName);
+    $result = mysqli_stmt_execute($stmt);
     if ($result) {
         echo "<script type='text/javascript'>
         alert('Data uploaded successfully')
         </script>";
     } else {
-        echo "Upload failed: " . mysqli_error($data);
+        @unlink($uploadDir . '/' . $photoName);
+        echo mysqli_stmt_errno($stmt) === 1062 ? 'Username Already Exist. Try another one' : 'Upload failed: ' . htmlspecialchars(mysqli_stmt_error($stmt));
     }
 }
 
@@ -78,11 +83,11 @@ if (isset($_POST['add_student'])) {
         }
 
         .div_dig {
-            background-color: skyblue;
-            width: 400px;
-            padding-top: 70px;
-            padding-bottom: 70px;
+            width: min(100%, 540px);
+            margin: 0 auto;
         }
+        .form-row { margin: 0 0 18px; text-align: left; }
+        .form-row label { width: auto; display: block; text-align: left; }
     </style>
 </head>
 
@@ -113,28 +118,32 @@ if (isset($_POST['add_student'])) {
             <h1>add_student</h1>
 
             <div class="div_dig">
-                <form id="studentForm" action="#" method="POST">
-                    <div>
-                        <label for="">Username</label>
-                        <input type="text" name="name" required pattern="[A-Za-z ]+">
+                <form id="studentForm" action="#" method="POST" enctype="multipart/form-data">
+                    <div class="form-row">
+                        <label for="name">Username</label>
+                        <input id="name" type="text" name="name" required pattern="[A-Za-z ]+">
                     </div>
 
-                    <div>
-                        <label for="">Email</label>
-                        <input type="email" name="email" required>
+                    <div class="form-row">
+                        <label for="email">Email</label>
+                        <input id="email" type="email" name="email" required>
                     </div>
 
-                    <div>
-                        <label for="">Phone</label>
-                        <input type="tel" name="phone" required pattern="(98|97)[0-9]{8}" inputmode="numeric">
+                    <div class="form-row">
+                        <label for="phone">Phone</label>
+                        <input id="phone" type="tel" name="phone" required pattern="(98|97)[0-9]{8}" title="Enter a 10-digit Nepali mobile number starting with 98 or 97." inputmode="numeric">
                     </div>
 
 
-                    <div>
-                        <label for="">Password</label>
-                        <input type="password" name="password" required minlength="6">
+                    <div class="form-row">
+                        <label for="password">Password</label>
+                        <input id="password" type="password" name="password" required minlength="6">
                     </div>
 
+                    <div class="form-row">
+                        <label for="photo">Student Photo (JPG or PNG, up to 2 MB)</label>
+                        <input id="photo" type="file" name="photo" accept="image/jpeg,image/png" required>
+                    </div>
 
                     <div>
                         <input type="submit" name="add_student">

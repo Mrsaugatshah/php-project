@@ -46,6 +46,14 @@ if (!$result) {
         .table_td {
             padding: 20px;
         }
+
+        .student-photo {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,6 +95,7 @@ if (!$result) {
         ?>
         <table border="1px">
             <tr>
+                <th class="table_th">Photo</th>
                 <th class="table_th">Username</th>
                 <th class="table_th">Email</th>
                 <th class="table_th">Phone</th>
@@ -97,11 +106,22 @@ if (!$result) {
             <?php if (mysqli_num_rows($result) > 0) : ?>
                 <?php while ($info = mysqli_fetch_assoc($result)) : ?>
                     <tr>
-                        <td class="table_td"><?php echo "{$info['username']}"; ?></td>
-                        <td class="table_td"><?php echo "{$info['email']}"; ?> </td>
+                        <td class="table_td">
+                            <?php
+                            $photoName = basename(str_replace('\\', '/', (string) ($info['image'] ?? '')));
+                            $photoFile = dirname(__DIR__) . '/uploads/students/' . $photoName;
+                            if ($photoName !== '' && is_file($photoFile)) :
+                            ?>
+                                <img class="student-photo" src="../uploads/students/<?php echo rawurlencode($photoName); ?>" alt="Photo of <?php echo htmlspecialchars($info['username'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <?php else : ?>
+                                <span>No photo</span>
+                            <?php endif; ?>
+                        </td>
+                        <td class="table_td"><?php echo htmlspecialchars($info['username'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td class="table_td"><?php echo htmlspecialchars($info['email'], ENT_QUOTES, 'UTF-8'); ?> </td>
 
-                        <td class="table_td"><?php echo "{$info['phone']}"; ?></td>
-                        <td class="table_td"><?php echo "{$info['password']}"; ?></td>
+                        <td class="table_td"><?php echo htmlspecialchars($info['phone'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td class="table_td"><?php echo htmlspecialchars($info['password'], ENT_QUOTES, 'UTF-8'); ?></td>
 
                         <td class="table_td"><?php echo "<a onClick=\"javascript:return confirm('Are you sure to delete it')\" href='../admin/delete.php?student_id={$info['id']}'>Delete</a>"; ?> </td>
                         <td class="table_td"><?php echo "<a href='../admin/update.php?student_id={$info['id']}'>Update</a>"; ?> </td>
@@ -112,7 +132,7 @@ if (!$result) {
 
             <?php else : ?>
                 <tr>
-                    <td class="table_td" colspan="5" style="text-align:center;">No student records found.</td>
+                    <td class="table_td" colspan="7" style="text-align:center;">No student records found.</td>
                 </tr>
             <?php endif; ?>
         </table>

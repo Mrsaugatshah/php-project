@@ -134,10 +134,10 @@ if (!$result) {
     </center>
 
     <div class="admission-form" id="admission-form">
-        <form action="data_check.php" method="POST">
+        <form action="data_check.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="student-id">Id</label>
-                <input id="student-id" type="text" name="id" placeholder="Enter your id" required>
+                <input id="student-id" type="text" name="id" placeholder="Enter your id" required pattern="[0-9]{4,15}" minlength="4" maxlength="15" inputmode="numeric" autocomplete="off" title="ID must be 4 to 15 digits and contain numbers only.">
                 <label for="student-name">Name</label>
                 <input id="student-name" type="text" name="name" placeholder="Enter your full name" required pattern="[A-Za-z ]+">
             </div>
@@ -147,11 +147,17 @@ if (!$result) {
             </div>
             <div class="form-group">
                 <label for="student-phone">Phone</label>
-                <input id="student-phone" type="tel" name="phone" placeholder="Enter your phone no" required pattern="[0-9]{10}" inputmode="numeric">
+                <input id="student-phone" type="tel" name="phone" placeholder="Enter your phone no" required pattern="(98|97)[0-9]{8}" title="Enter a 10-digit Nepali mobile number starting with 98 or 97." inputmode="numeric">
             </div>
             <div class="form-group">
                 <label for="student-message">Message</label>
                 <textarea id="student-message" name="message" placeholder="Tell us why you want to join" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="student-photo">Photo</label>
+                <input id="student-photo" type="file" name="photo" accept="image/png,image/jpeg" required>
+                <small class="photo-hint">JPG or PNG, up to 2 MB.</small>
             </div>
 
             <div class="form-group form-action">
@@ -169,8 +175,15 @@ if (!$result) {
             let message = document.getElementById("student-message").value;
 
             // ID validation
+            let idPattern = /^[0-9]{4,15}$/;
             if (id == "") {
                 alert("Please enter your ID");
+                e.preventDefault();
+                return;
+            }
+
+            if (!idPattern.test(id.trim())) {
+                alert("ID must be 4 to 15 digits and contain numbers only.");
                 e.preventDefault();
                 return;
             }
@@ -208,6 +221,30 @@ if (!$result) {
             // Message validation
             if (message.length < 10) {
                 alert("Message must contain at least 10 characters");
+                e.preventDefault();
+                return;
+            }
+
+            // Photo validation
+            let photo = document.getElementById("student-photo");
+
+            if (photo.files.length === 0) {
+                alert("Please select your photo");
+                e.preventDefault();
+                return;
+            }
+
+            let photoFile = photo.files[0];
+            let allowedPhotoTypes = ["image/jpeg", "image/jpg", "image/png"];
+
+            if (!allowedPhotoTypes.includes(photoFile.type)) {
+                alert("Only JPG, JPEG, and PNG photos are allowed.");
+                e.preventDefault();
+                return;
+            }
+
+            if (photoFile.size > 2 * 1024 * 1024) {
+                alert("Photo must be 2 MB or smaller.");
                 e.preventDefault();
                 return;
             }

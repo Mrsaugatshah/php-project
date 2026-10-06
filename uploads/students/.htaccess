@@ -1,0 +1,10 @@
+# Student admission photos. Disable script execution so an uploaded file can
+# never run as code even if a validation check is ever bypassed.
+php_flag engine off
+
+<FilesMatch "\.(php|php3|php4|php5|php7|php8|phtml|phar|pl|py|cgi|asp|aspx|sh|htaccess)$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes -ExecCGI
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phar
